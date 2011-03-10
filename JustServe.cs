@@ -124,8 +124,9 @@ namespace just_serve
                 }).Start();
         }
 
-        public void ServeFile(string FullPath, Request request, Response response)
+        public void ServeFile(string RelativePath, Request request, Response response)
         {
+            string FullPath = LocalPath + RelativePath.Replace('/', '\\');
             FileStream fs = new FileStream(FullPath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
             long numBytes = new FileInfo(FullPath).Length;
@@ -138,8 +139,7 @@ namespace just_serve
 
         private void ServeFile(Request request, Response response)
         {
-            string Path = LocalPath + request.Path.Replace('/', '\\');
-            ServeFile(Path, request, response);
+            ServeFile(request.Path, request, response);
         }
 
         private bool FileExists(string Path)
