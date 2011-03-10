@@ -1,0 +1,21 @@
+Bare minimum web server written in C#.  Inspired by projects such as Sinatra and Node.js, I wanted to get rid of the glut that bogs down asp.net.  I wanted a simple web server.
+
+
+JustServe server = new JustServe(@"C:\My Folder\My Other Folder\");
+
+server.Get("^/$", (req, res) =>
+	{
+		res.End("<h2>Welcome</h2>");
+	});
+
+server.Get("^/test(/?)$", (req, res) =>
+	{
+		res.End("This is just a test!");
+	});
+
+server.NotFound((req, res) =>
+	{
+		res.End("404 Not Found");
+	});
+
+server.Listen("127.0.0.1", 8888);
